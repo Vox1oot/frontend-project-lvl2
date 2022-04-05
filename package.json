@@ -1,0 +1,20 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "gendiff project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vox1oot/frontend-project-lvl2.git"
+  },
+  "author": "Morsa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vox1oot/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/Vox1oot/frontend-project-lvl2#readme"
+}
