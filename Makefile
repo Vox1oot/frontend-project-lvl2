@@ -8,10 +8,7 @@ test:
 	npx jest
 
 test-coverage:
-	npm test -- --coverage --coverageProvider=v8	
-		
-coverage:
-	npx jest --coverage
+	npm test -- --coverage --coverageProvider=v8
 
 gendiff:
-	node bin/gendiff.js			
+	node bin/gendiff.js	
