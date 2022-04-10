@@ -4,8 +4,11 @@ install:
 lint:
 	npx eslint .
 
-jest:
+test:
 	npx jest
+
+test-coverage:
+	npm test -- --coverage --coverageProvider=v8	
 		
 coverage:
 	npx jest --coverage
