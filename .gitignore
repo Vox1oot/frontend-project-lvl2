@@ -1,3 +1,10 @@
+# Dependency directories
 /node_modules/
+
+# Logs
 *.log
-/coverage/
+
+# Coverage directory
+coverage
+.coverage
+.coverage*
