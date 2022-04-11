@@ -19,7 +19,7 @@ jobs:
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
         env:
-          CC_TEST_REPORTER_ID: <7aa544deafae50ac7e184cdb8a9ef1989c15e01eacb4910ee5e61c12f19e8bbb>
+          CC_TEST_REPORTER_ID: ${{secrets.MORSA_ID}}
         with:
           coverageCommand: make test-coverage
           debug: true
