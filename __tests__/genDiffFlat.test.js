@@ -1,30 +1,31 @@
-import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import * as path from 'path';
 import genDiffFlat from '../bin/genDiffFlat.js';
+import parsers from '../src/parsers.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const getPathJSONfile = (filename) => path.join(__dirname, '..', '__fixtures__', 'json', filename);
+const getPathYAMLfile = (filename) => path.join(__dirname, '..', '__fixtures__', 'yaml', filename);
 
-describe('Flat JSON files', () => {
-  const obj1 = JSON.parse(readFileSync(getFixturePath('file1.json')));
-  const obj2 = JSON.parse(readFileSync(getFixturePath('file2.json')));
-  const flatObj = genDiffFlat(obj1, obj2);
+describe('genDiff flat objects', () => {
+  const verifyObject = parsers(path.join(__dirname, 'verificationFlatObj.json'));
 
-  test('Length and sort', () => {
-    const keys = Object.keys(flatObj);
-    expect(keys).toHaveLength(6);
-    expect(keys[0]).toBe('- follow');
-  });
+  describe('formats', () => {
+    test('JSON flat', () => {
+      const objJson1 = parsers(getPathJSONfile('file1.json'));
+      const objJson2 = parsers(getPathJSONfile('file2.json'));
+      const flatObj = genDiffFlat(objJson1, objJson2);
 
-  test('value', () => {
-    expect(flatObj['- follow']).toBe(false);
-    expect(flatObj['+ timeout']).toBe(20);
-  });
+      expect(flatObj).toStrictEqual(verifyObject);
+    });
 
-  test('match in both files', () => {
-    expect(flatObj).toMatchObject({ '  host': 'hexlet.io' });
+    test('YAML flat', () => {
+      const objYaml1 = parsers(getPathYAMLfile('filepath1.yml'));
+      const objYaml2 = parsers(getPathYAMLfile('filepath2.yml'));
+      const flatObj = genDiffFlat(objYaml1, objYaml2);
+
+      expect(flatObj).toStrictEqual(verifyObject);
+    });
   });
 });

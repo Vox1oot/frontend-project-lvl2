@@ -1,16 +1,11 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import path from 'path';
-import { readFileSync } from 'fs';
 import genDiffFlat from './genDiffFlat.js';
+import parsers from '../src/parsers.js';
 
 const genDiff = (filepath1, filepath2) => {
-  const workingDir = process.cwd();
-  const firstFilePath = path.resolve(workingDir, `${filepath1}`);
-  const secondFilePath = path.resolve(workingDir, `${filepath2}`);
-
-  const data1 = JSON.parse(readFileSync(firstFilePath));
-  const data2 = JSON.parse(readFileSync(secondFilePath));
+  const data1 = parsers(filepath1);
+  const data2 = parsers(filepath2);
 
   const diffFlatObj = genDiffFlat(data1, data2);
   const result = JSON.stringify(diffFlatObj, null, 2).replaceAll('"', '').replaceAll(',', '');
@@ -29,6 +24,6 @@ program
     console.log(genDiff(filepath1, filepath2));
   });
 
-program.parse();
+program.parse(process.argv);
 
 export default genDiff;
