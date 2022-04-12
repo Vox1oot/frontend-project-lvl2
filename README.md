@@ -6,3 +6,6 @@
 [![linter](https://github.com/Vox1oot/frontend-project-lvl2/actions/workflows/tests.yml/badge.svg)](https://github.com/Vox1oot/frontend-project-lvl2/actions/workflows/tests.yml)
 ### Test Coverage
 <a href="https://codeclimate.com/github/Vox1oot/frontend-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/3a387f55022b74a6e397/test_coverage" /></a>
+
+### Demonstration of calculating differences between two JSON & YML files
+<a href="https://asciinema.org/a/q3fDreQl4sNBcjJTUYBejxDkY" target="_blank"><img src="https://asciinema.org/a/q3fDreQl4sNBcjJTUYBejxDkY.svg" /></a>
