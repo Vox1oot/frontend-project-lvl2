@@ -40,10 +40,18 @@ describe('genDiff', () => {
   describe('tree', () => {
     const verifyTree = stringify(parsers(path.join(__dirname, 'verificationTree.json')));
 
-    test('diffTree', () => {
+    test('diffTree JSON', () => {
       const treeJSON1 = getPathJSONfile('tree1.json');
       const treeJSON2 = getPathJSONfile('tree2.json');
       const diffTree = genDiff(treeJSON1, treeJSON2);
+
+      expect(diffTree).toStrictEqual(verifyTree);
+    });
+
+    test('diffTree JYML', () => {
+      const treeYML1 = getPathYAMLfile('tree1.yaml');
+      const treeYML2 = getPathYAMLfile('tree2.yml');
+      const diffTree = genDiff(treeYML1, treeYML2);
 
       expect(diffTree).toStrictEqual(verifyTree);
     });
