@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const stylish = (diff, replacer = ' ', spacesCount = 2) => {
+const stylish = (diff, replacer = '  ', spacesCount = 1) => {
   const iter = (currentValue, depth) => {
     if (!_.isObject(currentValue)) {
       return `${currentValue}`;
