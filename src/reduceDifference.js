@@ -13,7 +13,7 @@ const reduceDifference = (data1, data2) => {
 
     if (_.has(data1, key) && _.has(data2, key)) {
       if (_.isObject(valueData1) && _.isObject(valueData2)) {
-        return { ...acc, [`  ${key}`]: reduceDifference(valueData1, valueData2) };
+        return { ...acc, [`${key}`]: reduceDifference(valueData1, valueData2) };
       }
       if (valueData1 === valueData2) {
         return { ...acc, [`  ${key}`]: valueData1 };
