@@ -36,4 +36,16 @@ describe('genDiff', () => {
       expect(flatYML).toStrictEqual(verifyFlat);
     });
   });
+
+  describe('tree', () => {
+    const verifyTree = stringify(parsers(path.join(__dirname, 'verificationTree.json')));
+
+    test('diffTree', () => {
+      const treeJSON1 = getPathJSONfile('tree1.json');
+      const treeJSON2 = getPathJSONfile('tree2.json');
+      const diffTree = genDiff(treeJSON1, treeJSON2);
+
+      expect(diffTree).toStrictEqual(verifyTree);
+    });
+  });
 });
