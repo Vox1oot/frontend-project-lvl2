@@ -14,14 +14,14 @@
             "- wow":"", 
             "+ wow": "so much"
           },
-          "key": "value",
+        "  key": "value",
         "+ ops": "vops"
       }
   },
   "group1": {
     "- baz": "bas",
     "+ baz": "bars",
-      "foo": "bar",
+    "  foo": "bar",
     "- nest": {
           "key": "value"
       },
