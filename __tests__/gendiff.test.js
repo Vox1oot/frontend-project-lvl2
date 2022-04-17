@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url';
 import * as path from 'path';
 import parsers from '../src/parsers.js';
-import genDiff, { stringify } from '../src/index.js';
+import reduceDifference from '../src/reduceDifference.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -10,48 +10,48 @@ const getPathYAMLfile = (filename) => path.join(__dirname, '..', '__fixtures__',
 
 describe('genDiff', () => {
   describe('flat', () => {
-    const verifyFlat = stringify(parsers(path.join(__dirname, 'verificationFlat.json')));
+    const verifyFlat = parsers(path.join(__dirname, 'verificationFlat.json'));
 
     test('json', () => {
-      const pathJSON1 = getPathJSONfile('filepath1.json');
-      const pathJSON2 = getPathJSONfile('filepath2.json');
-      const flatJSON = genDiff(pathJSON1, pathJSON2);
+      const json1 = parsers(getPathJSONfile('filepath1.json'));
+      const json2 = parsers(getPathJSONfile('filepath2.json'));
+      const flat = reduceDifference(json1, json2);
 
-      expect(flatJSON).toStrictEqual(verifyFlat);
+      expect(flat).toStrictEqual(verifyFlat);
     });
 
     test('yaml', () => {
-      const pathYML1 = getPathYAMLfile('filepath1.yml');
-      const pathYML2 = getPathYAMLfile('filepath2.yml');
-      const flatYML = genDiff(pathYML1, pathYML2);
+      const yml1 = parsers(getPathYAMLfile('filepath1.yml'));
+      const yml2 = parsers(getPathYAMLfile('filepath2.yml'));
+      const flat = reduceDifference(yml1, yml2);
 
-      expect(flatYML).toStrictEqual(verifyFlat);
+      expect(flat).toStrictEqual(verifyFlat);
     });
 
     test('json & yml', () => {
-      const pathJSON1 = getPathJSONfile('filepath1.json');
-      const pathYML2 = getPathYAMLfile('filepath2.yml');
-      const flatYML = genDiff(pathJSON1, pathYML2);
+      const json = parsers(getPathJSONfile('filepath1.json'));
+      const yml = parsers(getPathYAMLfile('filepath2.yml'));
+      const flat = reduceDifference(json, yml);
 
-      expect(flatYML).toStrictEqual(verifyFlat);
+      expect(flat).toStrictEqual(verifyFlat);
     });
   });
 
   describe('tree', () => {
-    const verifyTree = stringify(parsers(path.join(__dirname, 'verificationTree.json')));
+    const verifyTree = parsers(path.join(__dirname, 'verificationTree.json'));
 
-    test('diffTree JSON', () => {
-      const treeJSON1 = getPathJSONfile('tree1.json');
-      const treeJSON2 = getPathJSONfile('tree2.json');
-      const diffTree = genDiff(treeJSON1, treeJSON2);
+    test('json', () => {
+      const tree1 = parsers(getPathJSONfile('tree1.json'));
+      const tree2 = parsers(getPathJSONfile('tree2.json'));
+      const diffTree = reduceDifference(tree1, tree2);
 
       expect(diffTree).toStrictEqual(verifyTree);
     });
 
-    test('diffTree JYML', () => {
-      const treeYML1 = getPathYAMLfile('tree1.yaml');
-      const treeYML2 = getPathYAMLfile('tree2.yml');
-      const diffTree = genDiff(treeYML1, treeYML2);
+    test('yml', () => {
+      const tree1 = parsers(getPathYAMLfile('tree1.yaml'));
+      const tree2 = parsers(getPathYAMLfile('tree2.yml'));
+      const diffTree = reduceDifference(tree1, tree2);
 
       expect(diffTree).toStrictEqual(verifyTree);
     });
