@@ -7,26 +7,24 @@ const reduceDifference = (data1, data2) => {
 
   const sortedUnionKeys = _.sortBy(unionKeys);
 
-  const result = sortedUnionKeys.reduce((acc, key) => {
-    const valueData1 = data1[key];
-    const valueData2 = data2[key];
-
-    if (_.has(data1, key) && _.has(data2, key)) {
-      if (_.isObject(valueData1) && _.isObject(valueData2)) {
-        return { ...acc, [`${key}`]: reduceDifference(valueData1, valueData2) };
+  const result = sortedUnionKeys
+    .map((key) => {
+      if (_.isObject(data1[key]) && _.isObject(data2[key])) {
+        return { name: key, type: 'node', children: reduceDifference(data1[key], data2[key]) };
       }
-      if (valueData1 === valueData2) {
-        return { ...acc, [`  ${key}`]: valueData1 };
+      if (!_.has(data1, key)) {
+        return { name: key, type: 'plus', value: data2[key] };
       }
-      return { ...acc, [`- ${key}`]: valueData1, [`+ ${key}`]: valueData2 };
-    }
-
-    if (_.has(data1, key) && !_.has(data2.key)) {
-      return { ...acc, [`- ${key}`]: valueData1 };
-    }
-
-    return { ...acc, [`+ ${key}`]: valueData2 };
-  }, {});
+      if (!_.has(data2, key)) {
+        return { name: key, type: 'minus', value: data1[key] };
+      }
+      if (data1[key] !== data2[key]) {
+        return {
+          name: key, type: 'changed', firstValue: data1[key], secondValue: data2[key],
+        };
+      }
+      return { name: key, type: 'unchanged', value: data1[key] };
+    });
 
   return result;
 };
