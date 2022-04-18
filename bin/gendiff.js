@@ -14,7 +14,7 @@ program
   .action((filepath1, filepath2) => {
     const formatter = program.opts().format;
     switch (formatter) {
-      case ' here will other formatter':
+      case 'plain':
         console.log();
         break;
       default:
