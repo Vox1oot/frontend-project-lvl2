@@ -14,6 +14,8 @@ const parsers = (filePath) => {
       return yaml.load(fs.readFileSync(currentPath, 'utf8'));
     case '.json':
       return JSON.parse(fs.readFileSync(currentPath, 'utf8'));
+    case '.txt':
+      return fs.readFileSync(currentPath, 'utf-8');
     default:
       throw new Error('This file type is not supported');
   }
