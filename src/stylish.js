@@ -12,7 +12,47 @@ const stylish = (diff, replacer = '  ', spacesCount = 1) => {
 
     const lines = Object
       .entries(currentValue)
-      .map(([key, value]) => `${keyIndent}${key}: ${iter(value, depth + 1)}`);
+      .map(([key, value]) => {
+        if (value.type === 'deleted') {
+          if (_.isObject(value.value)) {
+            return `${keyIndent}- ${key}: ${iter(value.value, depth + 2)}`;
+          }
+          return `${keyIndent}- ${key}: ${value.value}`;
+        }
+
+        if (value.type === 'added') {
+          if (_.isObject(value.value)) {
+            return `${keyIndent}+ ${key}: ${iter(value.value, depth + 2)}`;
+          }
+          return `${keyIndent}+ ${key}: ${value.value}`;
+        }
+
+        if (value.type === 'unchanged') {
+          if (_.isObject(value.value)) {
+            return `${keyIndent}  ${key}: ${iter(value.value, depth + 2)}`;
+          }
+          return `${keyIndent}  ${key}: ${value.value}`;
+        }
+
+        if (value.type === 'changed') {
+          if (_.isObject(value.previusValue)) {
+            return `${keyIndent}- ${key}: ${iter(value.previusValue, depth + 2)}\n${keyIndent}+ ${key}: ${value.currentValue}`;
+          }
+          if (_.isObject(value.currentValue)) {
+            return `${keyIndent}- ${key}: ${value.previusValue}\n${keyIndent}+ ${key}: ${iter(value.currentValue, depth + 2)}`;
+          }
+          return `${keyIndent}- ${key}: ${value.previusValue}\n${keyIndent}+ ${key}: ${value.currentValue}`;
+        }
+
+        if (value.type === undefined) {
+          if (_.isObject(value.value)) {
+            return `${keyIndent}  ${key}: ${iter(value.value, depth + 2)}`;
+          }
+          return `${keyIndent}${key}: ${iter(value, depth + 2)}`;
+        }
+
+        return `${keyIndent}${key}: ${iter(value.value, depth + 1)}`;
+      });
 
     return [
       '{',
