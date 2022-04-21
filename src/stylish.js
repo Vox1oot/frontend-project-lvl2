@@ -10,55 +10,40 @@ const stylish = (diff, replacer = ' ', spacesCount = 2) => {
     const keyIndent = replacer.repeat(indentSize);
     const bracketIndent = replacer.repeat(indentSize - spacesCount);
 
-    const lines = Object
-      .entries(currentValue)
-      .map(([key, value]) => {
-        if (value.type === 'deleted') {
-          if (_.isObject(value.value)) {
-            return `${keyIndent}- ${key}: ${iter(value.value, depth + 2)}`;
-          }
-          return `${keyIndent}- ${key}: ${value.value}`;
-        }
-
-        if (value.type === 'added') {
-          if (_.isObject(value.value)) {
-            return `${keyIndent}+ ${key}: ${iter(value.value, depth + 2)}`;
-          }
-          return `${keyIndent}+ ${key}: ${value.value}`;
-        }
-
-        if (value.type === 'unchanged') {
-          if (_.isObject(value.value)) {
-            return `${keyIndent}  ${key}: ${iter(value.value, depth + 1)}`;
-          }
-          return `${keyIndent}  ${key}: ${value.value}`;
-        }
-
-        if (value.type === 'changed') {
+    const lines = Object.entries(currentValue).map(([key, value]) => {
+      switch (value.type) {
+        case 'deleted':
+          return _.isObject(value.value)
+            ? `${keyIndent}- ${key}: ${iter(value.value, depth + 2)}`
+            : `${keyIndent}- ${key}: ${value.value}`;
+        case 'added':
+          return _.isObject(value.value)
+            ? `${keyIndent}+ ${key}: ${iter(value.value, depth + 2)}`
+            : `${keyIndent}+ ${key}: ${value.value}`;
+        case 'unchanged':
+          return _.isObject(value.value)
+            ? `${keyIndent}  ${key}: ${iter(value.value, depth + 1)}`
+            : `${keyIndent}  ${key}: ${value.value}`;
+        case 'changed':
           if (_.isObject(value.previusValue)) {
             return `${keyIndent}- ${key}: ${iter(value.previusValue, depth + 2)}\n${keyIndent}+ ${key}: ${value.currentValue}`;
           }
           if (_.isObject(value.currentValue)) {
-            return `${keyIndent}- ${key}: ${value.previusValue}\n${keyIndent}+ ${key}: ${iter(value.currentValue, depth + 2)}`;
+            return `${keyIndent}- ${key}: ${
+              value.previusValue
+            }\n${keyIndent}+ ${key}: ${iter(value.currentValue, depth + 2)}`;
           }
           return `${keyIndent}- ${key}: ${value.previusValue}\n${keyIndent}+ ${key}: ${value.currentValue}`;
-        }
+        case undefined:
+          return _.isObject(value.value)
+            ? `${keyIndent}  ${key}: ${iter(value.value, depth + 2)}`
+            : `${keyIndent}  ${key}: ${iter(value, depth + 2)}`;
+        default:
+          return `${keyIndent}  ${key}: ${iter(value.value, depth + 2)}`;
+      }
+    });
 
-        if (value.type === undefined) {
-          if (_.isObject(value.value)) {
-            return `${keyIndent}  ${key}: ${iter(value.value, depth + 2)}`;
-          }
-          return `${keyIndent}  ${key}: ${iter(value, depth + 2)}`;
-        }
-
-        return `${keyIndent}  ${key}: ${iter(value.value, depth + 2)}`;
-      });
-
-    return [
-      '{',
-      ...lines,
-      `${bracketIndent}}`,
-    ].join('\n');
+    return ['{', ...lines, `${bracketIndent}}`].join('\n');
   };
 
   return iter(diff, 1);
