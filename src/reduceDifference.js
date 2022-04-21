@@ -1,10 +1,7 @@
 import _ from 'lodash';
 
 const reduceDifference = (data1, data2) => {
-  const keys1 = Object.keys(data1);
-  const keys2 = Object.keys(data2);
-  const unionKeys = _.union(keys1, keys2);
-
+  const unionKeys = _.union(Object.keys(data1), Object.keys(data2));
   const sortedUnionKeys = _.sortBy(unionKeys);
 
   const result = sortedUnionKeys

@@ -2,7 +2,7 @@ import { fileURLToPath } from 'url';
 import * as path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
-import stylish from '../src/stylish.js';
+import stylish from '../src/formatters/stylish.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
