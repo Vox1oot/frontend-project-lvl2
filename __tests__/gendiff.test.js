@@ -11,9 +11,17 @@ const getExpectedPath = (filename) => path.join(__dirname, filename);
 const readFile = (filename) => fs.readFileSync(getExpectedPath(filename), 'utf-8');
 
 describe('genDiff', () => {
-  test('stylish formatter', () => {
-    const tree1 = getFixturePath('tree1.json');
-    const tree2 = getFixturePath('tree2.json');
-    expect(stylish(genDiff(tree1, tree2))).toStrictEqual(readFile('expectStylish.txt'));
+  describe('stylish', () => {
+    test('JSON', () => {
+      const tree1 = getFixturePath('tree1.json');
+      const tree2 = getFixturePath('tree2.json');
+      expect(stylish(genDiff(tree1, tree2))).toStrictEqual(readFile('expectStylish.txt'));
+    });
+
+    test('YML', () => {
+      const tree1 = getFixturePath('tree1.yaml');
+      const tree2 = getFixturePath('tree2.yml');
+      expect(stylish(genDiff(tree1, tree2))).toStrictEqual(readFile('expectStylish.txt'));
+    });
   });
 });
