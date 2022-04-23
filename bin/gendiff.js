@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import genDiff from '../src/index.js';
 import stylish from '../src/formatters/stylish.js';
 import plain from '../src/formatters/plain.js';
+import json from '../src/formatters/json.js';
 
 const program = new Command();
 
@@ -17,6 +18,9 @@ program
     switch (formatter) {
       case 'plain':
         console.log(plain(genDiff(filepath1, filepath2)));
+        break;
+      case 'json':
+        console.log(json(genDiff(filepath1, filepath2)));
         break;
       default:
         console.log(stylish(genDiff(filepath1, filepath2)));
