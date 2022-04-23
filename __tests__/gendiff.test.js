@@ -3,6 +3,7 @@ import * as path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
 import stylish from '../src/formatters/stylish.js';
+import plain from '../src/formatters/plain.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,6 +23,14 @@ describe('genDiff', () => {
       const tree1 = getFixturePath('tree1.yaml');
       const tree2 = getFixturePath('tree2.yml');
       expect(stylish(genDiff(tree1, tree2))).toStrictEqual(readFile('expectStylish.txt'));
+    });
+  });
+
+  describe('plain', () => {
+    test('JSON', () => {
+      const tree1 = getFixturePath('tree1.json');
+      const tree2 = getFixturePath('tree2.json');
+      expect(plain(genDiff(tree1, tree2))).toStrictEqual(readFile('expectPlain.txt'));
     });
   });
 });

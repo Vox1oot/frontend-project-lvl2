@@ -2,6 +2,7 @@
 import { Command } from 'commander';
 import genDiff from '../src/index.js';
 import stylish from '../src/formatters/stylish.js';
+import plain from '../src/formatters/plain.js';
 
 const program = new Command();
 
@@ -15,7 +16,7 @@ program
     const formatter = program.opts().format;
     switch (formatter) {
       case 'plain':
-        console.log();
+        console.log(plain(genDiff(filepath1, filepath2)));
         break;
       default:
         console.log(stylish(genDiff(filepath1, filepath2)));
