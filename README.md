@@ -12,9 +12,15 @@ Supporting formats: JSON, YML, YAML
 ___
 ### Installation:
 Install of all dependencies: ```make install```
+___
 
-### Demonstration of diff between two flat files
-[![asciicast](https://asciinema.org/a/q3fDreQl4sNBcjJTUYBejxDkY.svg)](https://asciinema.org/a/q3fDreQl4sNBcjJTUYBejxDkY)
+### How use:
+* ```$ gendiff <filepath1> <filepath2>:``` show diff with default format
+* ```$ gendiff -f, --format plain <filepath1> <filepath2>:``` show diff with plain format
+* ```$ gendiff -h, --help:``` display help for command 
 
-### Demonstration of diff between two tree files
+### Demonstration of diff with default format
 [![asciicast](https://asciinema.org/a/KUUpfQgUQFBI4vkR3y34gxy4t.svg)](https://asciinema.org/a/KUUpfQgUQFBI4vkR3y34gxy4t)
+
+### Demonstration of diff with plain format
+[![asciicast](https://asciinema.org/a/jtYZozIvZ7hx4BgdPiWqWniQB.svg)](https://asciinema.org/a/jtYZozIvZ7hx4BgdPiWqWniQB)
