@@ -16,7 +16,7 @@ ___
 
 ### How use:
 * ```$ gendiff <filepath1> <filepath2>:``` show diff with default format
-* ```$ gendiff -f, --format plain <filepath1> <filepath2>:``` show diff with plain format
+* ```$ gendiff -f, --format [plain, json] <filepath1> <filepath2>:``` show diff with plain or json format
 * ```$ gendiff -h, --help:``` display help for command 
 
 ### Demonstration of diff with default format
@@ -24,3 +24,6 @@ ___
 
 ### Demonstration of diff with plain format
 [![asciicast](https://asciinema.org/a/jtYZozIvZ7hx4BgdPiWqWniQB.svg)](https://asciinema.org/a/jtYZozIvZ7hx4BgdPiWqWniQB)
+
+### Demonstration of diff with json format
+[![asciicast](https://asciinema.org/a/1tB25311k7xfrSpPnXQWhgCvL.svg)](https://asciinema.org/a/1tB25311k7xfrSpPnXQWhgCvL)
