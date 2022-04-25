@@ -9,37 +9,33 @@ import json from '../src/formatters/json.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-const getExpectedPath = (filename) => path.join(__dirname, filename);
-const readFile = (filename) => fs.readFileSync(getExpectedPath(filename), 'utf-8');
+
+const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 describe('genDiff', () => {
-  describe('format stylish', () => {
-    test('.json', () => {
-      const tree1 = getFixturePath('tree1.json');
-      const tree2 = getFixturePath('tree2.json');
-      expect(stylish(genDiff(tree1, tree2))).toStrictEqual(readFile('expectStylish.txt'));
-    });
+  const json1 = getFixturePath('tree1.json');
+  const json2 = getFixturePath('tree2.json');
+  const yaml1 = getFixturePath('tree1.yaml');
+  const yaml2 = getFixturePath('tree2.yml');
 
-    test('.yaml', () => {
-      const tree1 = getFixturePath('tree1.yaml');
-      const tree2 = getFixturePath('tree2.yml');
-      expect(stylish(genDiff(tree1, tree2))).toStrictEqual(readFile('expectStylish.txt'));
-    });
-  });
+  const stylishJSON = stylish(genDiff(json1, json2));
+  const stylishYAML = stylish(genDiff(yaml1, yaml2));
+  const stylishExpect = readFile('expectStylish.txt');
 
-  describe('format plain', () => {
-    test('.json', () => {
-      const tree1 = getFixturePath('tree1.json');
-      const tree2 = getFixturePath('tree2.json');
-      expect(plain(genDiff(tree1, tree2))).toStrictEqual(readFile('expectPlain.txt'));
-    });
-  });
+  const plainJSON = plain(genDiff(json1, json2));
+  const plainYAML = plain(genDiff(yaml1, yaml2));
+  const plainExpect = readFile('expectPlain.txt');
 
-  describe('format json', () => {
-    test('JSON', () => {
-      const tree1 = getFixturePath('tree1.json');
-      const tree2 = getFixturePath('tree2.json');
-      expect(json(genDiff(tree1, tree2))).toStrictEqual(readFile('expectJSON.txt'));
-    });
+  const structureJSON = json(genDiff(json1, json2));
+  const structureYAML = json(genDiff(yaml1, yaml2));
+  const jsonExpect = readFile('expectJSON.txt');
+
+  test.each([
+    [stylishJSON, stylishYAML, stylishExpect],
+    [plainJSON, plainYAML, plainExpect],
+    [structureJSON, structureYAML, jsonExpect],
+  ])('formatters', (a, b, expected) => {
+    expect(a).toStrictEqual(expected);
+    expect(b).toStrictEqual(expected);
   });
 });

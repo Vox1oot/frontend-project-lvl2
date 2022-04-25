@@ -2,9 +2,8 @@ import _ from 'lodash';
 
 const reduceDifference = (data1, data2) => {
   const unionKeys = _.union(Object.keys(data1), Object.keys(data2));
-  const sortedUnionKeys = _.sortBy(unionKeys);
 
-  const result = sortedUnionKeys
+  const result = _.sortBy(unionKeys)
     .reduce((acc, key) => {
       if (_.isObject(data1[key]) && _.isObject(data2[key])) {
         return { ...acc, [`${key}`]: { type: 'nested', value: reduceDifference(data1[key], data2[key]) } };
