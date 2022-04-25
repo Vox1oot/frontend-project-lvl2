@@ -1,19 +1,13 @@
-import fs from 'fs';
 import yaml from 'js-yaml';
-import path from 'path';
 
-const parsers = (filePath) => {
-  const currentPath = path.resolve(process.cwd(), `${filePath}`);
-
-  const extension = path.parse(currentPath).ext;
-
+const parsers = (data, extension) => {
   switch (extension) {
     case '.yml':
-      return yaml.load(fs.readFileSync(currentPath, 'utf8'));
+      return yaml.load(data);
     case '.yaml':
-      return yaml.load(fs.readFileSync(currentPath, 'utf8'));
+      return yaml.load(data);
     case '.json':
-      return JSON.parse(fs.readFileSync(currentPath, 'utf8'));
+      return JSON.parse(data);
     default:
       throw new Error('This file type is not supported');
   }
