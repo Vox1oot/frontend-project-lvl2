@@ -2,9 +2,6 @@ import { fileURLToPath } from 'url';
 import * as path from 'path';
 import fs from 'fs';
 import genDiff from '../src/index.js';
-import stylish from '../src/formatters/stylish.js';
-import plain from '../src/formatters/plain.js';
-import json from '../src/formatters/json.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -18,16 +15,16 @@ describe('genDiff', () => {
   const yaml1 = getFixturePath('tree1.yaml');
   const yaml2 = getFixturePath('tree2.yml');
 
-  const stylishJSON = stylish(genDiff(json1, json2));
-  const stylishYAML = stylish(genDiff(yaml1, yaml2));
+  const stylishJSON = genDiff(json1, json2);
+  const stylishYAML = genDiff(yaml1, yaml2);
   const stylishExpect = readFile('expectStylish.txt');
 
-  const plainJSON = plain(genDiff(json1, json2));
-  const plainYAML = plain(genDiff(yaml1, yaml2));
+  const plainJSON = genDiff(json1, json2, 'plain');
+  const plainYAML = genDiff(yaml1, yaml2, 'plain');
   const plainExpect = readFile('expectPlain.txt');
 
-  const structureJSON = json(genDiff(json1, json2));
-  const structureYAML = json(genDiff(yaml1, yaml2));
+  const structureJSON = genDiff(json1, json2, 'json');
+  const structureYAML = genDiff(yaml1, yaml2, 'json');
   const jsonExpect = readFile('expectJSON.txt');
 
   test.each([
