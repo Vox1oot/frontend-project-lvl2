@@ -8,26 +8,29 @@ const plain = (diff) => {
       return `${currentValue}`;
     }
 
-    const lines = Object.entries(currentValue).map(([key, fild]) => {
+    const lines = Object.entries(currentValue).map((node) => {
+      const [, fild] = node;
       switch (fild.type) {
+        case 'nested':
+          return iter(fild.children, `${parent}${fild.name}.`);
         case 'added':
           return _.isObject(fild.value)
-            ? `Property '${parent}${key}' was added with value: [complex value]`
-            : `Property '${parent}${key}' was added with value: ${getValue(fild.value)}`;
+            ? `Property '${parent}${fild.name}' was added with value: [complex value]`
+            : `Property '${parent}${fild.name}' was added with value: ${getValue(fild.value)}`;
         case 'deleted':
-          return `Property '${parent}${key}' was removed`;
+          return `Property '${parent}${fild.name}' was removed`;
         case 'changed':
           if (_.isObject(fild.previusValue)) {
-            return `Property '${parent}${key}' was updated. From [complex value] to ${getValue(fild.currentValue)}`;
+            return `Property '${parent}${fild.name}' was updated. From [complex value] to ${getValue(fild.currentValue)}`;
           }
           if (_.isObject(fild.currentValue)) {
-            return `Property '${parent}${key}' was updated. From ${getValue(fild.previusValue)} to [complex value]`;
+            return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to [complex value]`;
           }
-          return `Property '${parent}${key}' was updated. From ${getValue(fild.previusValue)} to ${getValue(fild.currentValue)}`;
+          return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to ${getValue(fild.currentValue)}`;
         case 'unchanged':
           return '';
         default:
-          return iter(fild.value, `${parent}${key}.`);
+          throw new Error(`Type: ${node.type} is undefined`);
       }
     });
 
