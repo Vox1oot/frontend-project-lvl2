@@ -10,7 +10,7 @@ It is the CLI programm that generate difference between two files.
 
 Supporting formats: JSON, YML, YAML
 ___
-### Installation:
+## Installation:
 Install of all dependencies: ```make install```
 ___
 
