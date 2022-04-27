@@ -20,11 +20,11 @@ const plain = (diff) => {
         case 'deleted':
           return `Property '${parent}${fild.name}' was removed`;
         case 'changed':
-          if (_.isObject(fild.previusValue)) {
-            return `Property '${parent}${fild.name}' was updated. From [complex value] to ${getValue(fild.currentValue)}`;
-          }
-          if (_.isObject(fild.currentValue)) {
-            return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to [complex value]`;
+          if (_.isObject(fild.previusValue) || _.isObject(fild.currentValue)) {
+            const rest = _.isObject(fild.previusValue)
+              ? `From [complex value] to ${getValue(fild.currentValue)}`
+              : `From ${getValue(fild.previusValue)} to [complex value]`;
+            return `Property '${parent}${fild.name}' was updated. ${rest}`;
           }
           return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to ${getValue(fild.currentValue)}`;
         case 'unchanged':
