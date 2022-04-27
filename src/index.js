@@ -6,8 +6,8 @@ import showFormat from './formatters/showFormat.js';
 
 const getParsingData = (file) => {
   const data = readFile(file);
-  const dataType = path.extname(file);
-  return parsers(data, dataType);
+  const extension = path.extname(file).substring(1);
+  return parsers(data, extension);
 };
 
 const genDiff = (file1, file2, format) => {
