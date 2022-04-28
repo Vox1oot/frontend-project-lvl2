@@ -1,7 +1,7 @@
 import yaml from 'js-yaml';
 
-const parsers = (data, extension) => {
-  switch (extension) {
+const parsers = (data, dataType) => {
+  switch (dataType) {
     case 'yml':
       return yaml.load(data);
     case 'yaml':
@@ -9,8 +9,9 @@ const parsers = (data, extension) => {
     case 'json':
       return JSON.parse(data);
     default:
-      throw new Error('This file type is not supported');
+      throw new Error(`This dataType - ${dataType} is not supported`);
   }
 };
 
 export default parsers;
+
