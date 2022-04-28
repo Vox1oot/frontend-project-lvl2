@@ -14,4 +14,3 @@ const parsers = (data, dataType) => {
 };
 
 export default parsers;
-
