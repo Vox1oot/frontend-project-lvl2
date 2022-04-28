@@ -1,6 +1,15 @@
 import _ from 'lodash';
 
-const getValue = (value) => (typeof value !== 'string' ? value : `'${value}'`);
+const getValue = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+
+  if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+  return value;
+};
 
 const plain = (diff) => {
   const iter = (currentValue, parent) => {
@@ -14,17 +23,12 @@ const plain = (diff) => {
         case 'nested':
           return iter(fild.children, `${parent}${fild.name}.`);
         case 'added':
-          return _.isObject(fild.value)
-            ? `Property '${parent}${fild.name}' was added with value: [complex value]`
-            : `Property '${parent}${fild.name}' was added with value: ${getValue(fild.value)}`;
+          return `Property '${parent}${fild.name}' was added with value: ${getValue(fild.value)}`;
         case 'deleted':
           return `Property '${parent}${fild.name}' was removed`;
         case 'changed':
           if (_.isObject(fild.previusValue) || _.isObject(fild.currentValue)) {
-            const rest = _.isObject(fild.previusValue)
-              ? `From [complex value] to ${getValue(fild.currentValue)}`
-              : `From ${getValue(fild.previusValue)} to [complex value]`;
-            return `Property '${parent}${fild.name}' was updated. ${rest}`;
+            return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to ${getValue(fild.currentValue)}`;
           }
           return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to ${getValue(fild.currentValue)}`;
         case 'unchanged':
