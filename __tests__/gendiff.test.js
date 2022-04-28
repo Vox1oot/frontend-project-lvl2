@@ -15,8 +15,8 @@ describe('genDiff', () => {
   const yaml1 = getFixturePath('tree1.yaml');
   const yaml2 = getFixturePath('tree2.yml');
 
-  const stylishJSON = genDiff(json1, json2, 'stylish');
-  const stylishYAML = genDiff(yaml1, yaml2, 'stylish');
+  const stylishJSON = genDiff(json1, json2);
+  const stylishYAML = genDiff(yaml1, yaml2);
   const stylishExpect = readFile('expectStylish.txt');
 
   const plainJSON = genDiff(json1, json2, 'plain');

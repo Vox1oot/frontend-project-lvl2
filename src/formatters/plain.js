@@ -37,10 +37,8 @@ const plain = (diff) => {
           throw new Error(`Type: ${node.type} is undefined`);
       }
     });
-
     return _.compact([...lines]).join('\n');
   };
-
   return iter(diff, '');
 };
 
