@@ -13,7 +13,7 @@ const getValue = (value) => {
 
 const plain = (diff) => {
   const iter = (currentValue, parent) => {
-    if (!(currentValue instanceof Object)) {
+    if (!_.isObject(currentValue)) {
       return `${currentValue}`;
     }
 
