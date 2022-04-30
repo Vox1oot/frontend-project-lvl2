@@ -26,9 +26,6 @@ const plain = (diff) => {
         case 'deleted':
           return `Property '${parent}${fild.name}' was removed`;
         case 'changed':
-          if (_.isObject(fild.previusValue) || _.isObject(fild.currentValue)) {
-            return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to ${getValue(fild.currentValue)}`;
-          }
           return `Property '${parent}${fild.name}' was updated. From ${getValue(fild.previusValue)} to ${getValue(fild.currentValue)}`;
         case 'unchanged':
           return '';
